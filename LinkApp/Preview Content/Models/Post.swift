@@ -5,5 +5,6 @@ struct Post: Identifiable, Codable {
     let title: String
     let body: String
     let user_id: Int
+    let media_path: String?
 }
 
