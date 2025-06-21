@@ -1,46 +1,70 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var viewModel = LoginViewModel()
+    @EnvironmentObject var authManager: AuthManager
+    @State private var email = ""
+    @State private var password = ""
+    @State private var errorMessage = ""
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                Text("Link ログイン")
-                    .font(.title)
-                    .bold()
+        VStack {
+            TextField("メールアドレス", text: $email)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                TextField("メールアドレス", text: $viewModel.email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
+            SecureField("パスワード", text: $password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                SecureField("パスワード", text: $viewModel.password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            Button("ログイン") {
+                login()
+            }
 
-                Button(action: {
-                    viewModel.login()
-                }) {
-                    Text("ログイン")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+            if !errorMessage.isEmpty {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            }
+        }
+        .padding()
+    }
+
+    func login() {
+        guard let url = URL(string: "http://localhost:8765/api/login") else { return }
+
+        let parameters = ["email": email, "password": password]
+        guard let data = try? JSONSerialization.data(withJSONObject: parameters) else { return }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = data
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    self.errorMessage = "通信エラー"
                 }
+                return
+            }
 
-                if !viewModel.message.isEmpty {
-                    Text(viewModel.message)
-                        .foregroundColor(.gray)
-                        .padding()
+            if let json = try? JSONDecoder().decode(LoginResponse.self, from: data),
+               json.success {
+                DispatchQueue.main.async {
+                    authManager.login(with: json.data.token)
                 }
-
-                // ↓ ここで遷移
-                NavigationLink(destination: MainTabView(), isActive: $viewModel.isLoggedIn) {
-                    EmptyView()
+            } else {
+                DispatchQueue.main.async {
+                    self.errorMessage = "ログイン失敗"
                 }
             }
-            .padding()
-        }
+        }.resume()
+    }
+}
+
+struct LoginResponse: Codable {
+    let success: Bool
+    let data: LoginData
+
+    struct LoginData: Codable {
+        let token: String
     }
 }
 #Preview {

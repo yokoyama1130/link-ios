@@ -1,17 +1,18 @@
-//
-//  LinkAppApp.swift
-//  LinkApp
-//
-//  Created by yokoyan on 2025/06/21.
-//
-
 import SwiftUI
 
 @main
 struct LinkAppApp: App {
+    @StateObject var authManager = AuthManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if authManager.isLoggedIn {
+                MainTabView()
+                    .environmentObject(authManager)
+            } else {
+                LoginView()
+                    .environmentObject(authManager)
+            }
         }
     }
 }
