@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DD2C37EA2E06F66800AE16D5 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2C37E92E06F66800AE16D5 /* info.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DDE98F5B2E06DFA6009FEC17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD2C37E92E06F66800AE16D5 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		DDE98F4A2E06DFA5009FEC17 /* LinkApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDE98F5A2E06DFA6009FEC17 /* LinkAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDE98F642E06DFA7009FEC17 /* LinkAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +80,7 @@
 		DDE98F412E06DFA5009FEC17 = {
 			isa = PBXGroup;
 			children = (
+				DD2C37E92E06F66800AE16D5 /* info.plist */,
 				DDE98F4C2E06DFA5009FEC17 /* LinkApp */,
 				DDE98F5D2E06DFA6009FEC17 /* LinkAppTests */,
 				DDE98F672E06DFA7009FEC17 /* LinkAppUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD2C37EA2E06F66800AE16D5 /* info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +405,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"LinkApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -426,6 +434,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"LinkApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
