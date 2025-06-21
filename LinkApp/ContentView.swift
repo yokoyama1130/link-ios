@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    // AppStorage でトークンを保持していれば再起動後も維持される
+    @AppStorage("jwtToken") var jwtToken: String = ""
+
     var body: some View {
-        LoginView()
+        if jwtToken.isEmpty {
+            LoginView()
+        } else {
+            MainTabView()
+        }
     }
 }
+
 
 #Preview {
     ContentView()

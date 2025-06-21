@@ -35,7 +35,7 @@ struct LoginView: View {
                 }
 
                 // ↓ ここで遷移
-                NavigationLink(destination: HomeView(), isActive: $viewModel.isLoggedIn) {
+                NavigationLink(destination: MainTabView(), isActive: $viewModel.isLoggedIn) {
                     EmptyView()
                 }
             }
@@ -43,4 +43,8 @@ struct LoginView: View {
         }
     }
 }
+#Preview {
+    LoginView()
+}
+
 
