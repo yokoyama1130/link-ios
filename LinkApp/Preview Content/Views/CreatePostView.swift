@@ -1,28 +1,39 @@
 import SwiftUI
+import PhotosUI
 
 struct CreatePostView: View {
-    @StateObject var viewModel = PostViewModel()
+    @State private var selectedImage: UIImage?
+    @State private var imagePickerPresented = false
     @State private var title = ""
-    @State private var content = ""  // ← 修正ここ！
+    @State private var postBody = ""  // ← 修正済み
 
     var body: some View {
         VStack {
             TextField("タイトル", text: $title)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("本文", text: $postBody)
 
-            TextField("本文", text: $content)  // ← ここも合わせて変更
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            if let image = selectedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 200)
+            }
+
+            Button("画像を選択") {
+                imagePickerPresented = true
+            }
 
             Button("投稿") {
-                viewModel.createPost(title: title, body: content) {  // ← ここも
-                    print("投稿完了")
-                }
+                // multipart/form-dataで画像と一緒にPOST送信
             }
         }
+        .sheet(isPresented: $imagePickerPresented) {
+            ImagePicker(image: $selectedImage)
+        }
         .padding()
-        .navigationTitle("投稿作成")
     }
 }
+
 
 #Preview {
     CreatePostView()
