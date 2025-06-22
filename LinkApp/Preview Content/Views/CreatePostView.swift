@@ -2,19 +2,19 @@ import SwiftUI
 import PhotosUI
 
 struct CreatePostView: View {
-    @StateObject private var viewModel = PostViewModel()
+    @ObservedObject var viewModel: PostViewModel  // ✅ これだけにする
     @State private var selectedImage: UIImage?
     @State private var imagePickerPresented = false
     @State private var title = ""
     @State private var postBody = ""
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack {
             TextField("タイトル", text: $title)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(.roundedBorder)
 
             TextField("本文", text: $postBody)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(.roundedBorder)
 
             if let image = selectedImage {
                 Image(uiImage: image)
@@ -28,28 +28,24 @@ struct CreatePostView: View {
             }
 
             Button("投稿") {
+                print("📤 投稿ボタンが押されました")
                 viewModel.createPostWithImage(title: title, body: postBody, image: selectedImage) {
-                    // 投稿完了後の処理
+                    print("✅ 投稿完了")
                     title = ""
                     postBody = ""
                     selectedImage = nil
-                    print("投稿完了")
                 }
             }
+
             .padding()
-            .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(10)
         }
-        .padding()
         .sheet(isPresented: $imagePickerPresented) {
             ImagePicker(image: $selectedImage)
         }
-        .navigationTitle("投稿作成")
+        .padding()
     }
 }
 
-
 #Preview {
-    CreatePostView()
+    CreatePostView(viewModel: PostViewModel())  // ← ここで作って渡せばOK
 }

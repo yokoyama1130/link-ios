@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = PostViewModel()
+    @ObservedObject var viewModel: PostViewModel  // ← 修正
 
     var body: some View {
         NavigationView {
@@ -13,7 +13,6 @@ struct HomeView: View {
                     Text(post.body)
                         .font(.body)
 
-                    // 画像がある場合のみ表示
                     if let path = post.media_path,
                        let url = URL(string: "http://localhost:8765" + path) {
                         AsyncImage(url: url) { phase in
@@ -44,5 +43,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(viewModel: PostViewModel())  // ← 修正
 }

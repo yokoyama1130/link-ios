@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct MyPageView: View {
-    @StateObject var viewModel = PostViewModel()
-    let myUserId = 1 // JWTのsubの値と一致させる
+    @ObservedObject var viewModel: PostViewModel  // ← 修正
+    let myUserId = 1
 
     var body: some View {
         List(viewModel.myPosts) { post in
@@ -20,6 +20,7 @@ struct MyPageView: View {
         }
     }
 }
+
 #Preview {
-    MyPageView()
+    MyPageView(viewModel: PostViewModel())  // ← 修正
 }
